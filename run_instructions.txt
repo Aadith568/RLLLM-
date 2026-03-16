@@ -1,0 +1,43 @@
+How to Run the RL-LLM Hyperparameter Optimization Project
+
+1. Prerequisites
+Ensure you have the following installed on your system:
+- Python 3.11 or higher
+- Git
+
+2. Setup the Environment
+It is highly recommended to use a Python virtual environment to avoid dependency conflicts. Open your terminal or command prompt in the project folder and run:
+
+python -m venv venv
+
+Activate the virtual environment:
+- On Windows:
+  venv\Scripts\activate
+- On macOS/Linux:
+  source venv/bin/activate
+
+3. Install Dependencies
+Install all the required Python packages. Note that installing PyTorch with CUDA support is strongly recommended for faster GPU training. Run the following command:
+
+pip install torch stable-baselines3 gymnasium llama-cpp-python scikit-learn numpy pandas matplotlib seaborn
+
+4. Setup the LLM Advisor Model
+- Download a standard Phi-3 LLM weights file in GGUF format (e.g., `Phi-3-mini-4k-instruct-q4.gguf`).
+- Create an `llm` directory if it doesn't exist, and place the downloaded .gguf file inside it.
+- If you use a different filename or save it in a different location, open `config.py` and update the `LLM_MODEL_PATH` variable to reflect the correct path to your model file.
+
+5. Run the Project
+Once the environment is set up and the LLM model is in place, you can start the hyperparameter optimization pipeline:
+
+python main.py
+
+This script will orchestrate data loading, RL optimization with LLM guidance, and the final BiLSTM models training.
+
+6. View the Results
+After the execution completes, check the generated outputs:
+- The `outputs/` directory will contain visual evaluation graphs (`loss_curve.png`, `confusion_matrix.png`) and quantitative results (`metrics.txt`).
+- The `output_without_early/` directory will contain the results for the final run executed without early stopping.
+- The optimized RL agent will be saved in the root directory as `dqn_hyperparam_agent.zip`.
+
+7. Configuration (Optional)
+To tweak optimization variables (like timesteps, learning rate bounds, dropout limits, or maximum epochs), open `config.py` and adjust the configuration variables before running `main.py`.
